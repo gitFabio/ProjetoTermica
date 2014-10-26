@@ -4,10 +4,10 @@
 	$hDesp = $_POST["hora"];
 	$mDesp = $_POST["minutos"];
 	$temperatura = $_POST["temp"];*/
-	$hDesp = "8";
-	$mDesp = "0";
+	$hDesp = "20";
+	$mDesp = "30";
 	$temperatura = "90";
-	$hAtual = date("h");
+	$hAtual = date("H");
 	$mAtual = date("i");
 	$sAtual = date("s");
 
@@ -29,6 +29,8 @@ try{
 
 	fwrite($con, $enviar);
 	echo nl2br("\nLigou sucesso\n");
+
+	fclose($con);
 	
 }catch(Exeption $e){
 	echo nl2br("\nNao ligou\n");
