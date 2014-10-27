@@ -70,19 +70,6 @@ void loop() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 boolean dadosWeb(){
   String horaA = "", minutoA = "", temperaturaPHP = "", horaDPHP = "", minutoDPHP = "";
   char entrada;
@@ -231,36 +218,6 @@ int obtemHoraPHPA(String horaA, char entrada) {
   Serial.println(" h");
   return horaA.toInt();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /**
