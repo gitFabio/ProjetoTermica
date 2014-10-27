@@ -35,7 +35,7 @@ void setup() {
 }
 
 void loop() {
-  
+
   if (operacao > 3) {
     operacao = 0;
   }
@@ -65,15 +65,14 @@ void loop() {
     Serial.println("Iniciando a contagem do tempo");
     contagemTempo();
   }
-  
-  
+
+
 }
 
-
-boolean dadosWeb(){
+boolean dadosWeb() {
   String horaA = "", minutoA = "", temperaturaPHP = "", horaDPHP = "", minutoDPHP = "";
   char entrada;
-  
+
   if (Serial.available() > 0) {
     Serial.println("Aqui dados web2");
     entrada = (char) Serial.read();
@@ -91,7 +90,7 @@ boolean dadosWeb(){
       if (minutoA != "") {
         minutoA = "";
       }
-     minuto = obtemMinutoPHPA(minutoA, entrada);
+      minuto = obtemMinutoPHPA(minutoA, entrada);
 
     }
 
@@ -100,7 +99,7 @@ boolean dadosWeb(){
       if (temperaturaPHP != "") {
         temperaturaPHP = "";
       }
-     temperatura = obtemTemperaturaPHP(temperaturaPHP, entrada);
+      temperatura = obtemTemperaturaPHP(temperaturaPHP, entrada);
     }
 
     if (entrada == '!') {
@@ -119,22 +118,22 @@ boolean dadosWeb(){
       minutoD = obtemMinutoPHPD(minutoDPHP, entrada);
     }
   }
-  
-  
-  
-  if(hora != -1 && minuto != -1 && temperatura != -1 && horaD != -1 && minutoD != -1){
-     confHora = true;
-  confDepertador = true;
-  confTemperatura = true; 
-  operacao = 4;
-  Serial.println(hora);
-  Serial.println(minuto);
-  Serial.println(temperatura);
-  Serial.println(horaD);
-  Serial.println(minutoD);
-  return true;
+
+
+
+  if (hora != -1 && minuto != -1 && temperatura != -1 && horaD != -1 && minutoD != -1) {
+    confHora = true;
+    confDepertador = true;
+    confTemperatura = true;
+    operacao = 4;
+    Serial.println(hora);
+    Serial.println(minuto);
+    Serial.println(temperatura);
+    Serial.println(horaD);
+    Serial.println(minutoD);
+    return true;
   }
-  
+
   return false;
 }
 
@@ -219,7 +218,6 @@ int obtemHoraPHPA(String horaA, char entrada) {
   return horaA.toInt();
 }
 
-
 /**
 Funcao usada para exibir hora e temperatura atual do sensor na primeira linha
 e na segunda linha o horario de ligar e a temperatura que devera esquentar a agua
@@ -257,22 +255,22 @@ void exibirHoraLCD(int h, int m, int s, int temp, int hD, int mD) {
   } else {
     escreverLCD(String(s), 6, 7, 0);
   }
-  
+
   escreverLCD(" ", 8, 8, 0);
   //Temperatura atual do sensor
   escreverLCD(" ", 9, 14, 0);
   //
   escreverLCD("C", 15, 15, 0);
-  
-  
+
+
   //============================== Primeira linha do display =========================//
-  
+
   //============================= Segunda Linha do Display ===========================//
-  
+
   escreverLCD(":", 2, 2, 1);
   escreverLCD(":", 5, 5, 1);
-  
-  
+
+
   if (hD < 10) {
     escreverLCD("0", 0, 0, 1);
     escreverLCD(String(hD), 1, 1, 1);
@@ -286,14 +284,14 @@ void exibirHoraLCD(int h, int m, int s, int temp, int hD, int mD) {
   } else {
     escreverLCD(String(mD), 3, 4, 1);
   }
-  
+
   escreverLCD("00", 6, 7, 1);
-  
+
   escreverLCD(" | ", 8, 10, 1);
   escreverLCD(String(temp), 11, 14, 1);
   escreverLCD("C", 15, 15, 1);
   //============================= Segunda Linha do Display ===========================//
-  
+
 }
 
 /*
@@ -317,7 +315,7 @@ void contagemTempo() {
     }
     if (ant != segundo) {
       ant = segundo;
-      
+
       if (segundo > 59) {
         m++;
         segundo = 0;
@@ -335,30 +333,30 @@ void contagemTempo() {
 
       exibirHoraLCD(h, m, segundo, temperatura, horaD, minutoD);
     }
-    if(h == horaD && m == minutoD){
+    if (h == horaD && m == minutoD) {
       Serial.println("Iniciando o aquecimento da agura");
       ligadoAquecedor = true;
     }
-    
-    if(ligadoAquecedor){
-      aquecendo();  
+
+    if (ligadoAquecedor) {
+      aquecendo();
     }
   }
 }
 
 /**
 */
-void aquecendo(){
+void aquecendo() {
   Serial.println("Aquecendo");
-  
-  
+
+
 }
 
 void recemLigado() {
   escreverLCD("** ** **** ** **", 0, 16, 0);
   escreverLCD("** ** **** ** **", 0, 16, 1);
   while (true) {
-    if(dadosWeb()){
+    if (dadosWeb()) {
       break;
     }
     if (digitalRead(botaoDefinir) == HIGH) {
@@ -497,19 +495,19 @@ void configurarTemperatura() {
 
 
 void escreverLCD(String text, int inicio, int fim, int linha) {
-  if(debug){
-  Serial.print (text.length());
-  Serial.print(" -> ");
-  Serial.println(fim - inicio);
-  
-  Serial.print("Posicao ");
-  Serial.print(inicio);
-  Serial.print(" ");
-  Serial.println(fim);
-  
-  Serial.println(text);
+  if (debug) {
+    Serial.print (text.length());
+    Serial.print(" -> ");
+    Serial.println(fim - inicio);
+
+    Serial.print("Posicao ");
+    Serial.print(inicio);
+    Serial.print(" ");
+    Serial.println(fim);
+
+    Serial.println(text);
   }
-  
+
   if (text.length() > (fim + 1) - inicio || text.length() > 16) {
     if (fim - inicio == 0 && text.length() == 1) {
       lcd.setCursor(inicio, linha);
